@@ -31,7 +31,9 @@ import { useParams } from "react-router-dom";
 type ModalDevelopersUpdateProps = {
   developer: DevelopersResponseProps;
 };
-export const ModalDeveloperUpdate = ({developer}: ModalDevelopersUpdateProps) => {
+export const ModalDeveloperUpdate = ({
+  developer,
+}: ModalDevelopersUpdateProps) => {
   const toast = useToast();
 
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -39,7 +41,8 @@ export const ModalDeveloperUpdate = ({developer}: ModalDevelopersUpdateProps) =>
   const initialRef = React.useRef(null);
   const finalRef = React.useRef(null);
 
-  const [developerUpdate, setDeveloperUpdate] = useState<DevelopersResponseProps>(developer);
+  const [developerUpdate, setDeveloperUpdate] =
+    useState<DevelopersResponseProps>(developer);
 
   const [levels, setLevels] = useState<LevelsResponseProps[]>([]);
   useEffect(() => {
@@ -65,8 +68,9 @@ export const ModalDeveloperUpdate = ({developer}: ModalDevelopersUpdateProps) =>
       })
       .catch(() => {
         alert("Erro ao editar");
-      }).finally(() =>{
-        window.location.reload()
+      })
+      .finally(() => {
+        window.location.reload();
       });
   }
 
@@ -93,7 +97,10 @@ export const ModalDeveloperUpdate = ({developer}: ModalDevelopersUpdateProps) =>
                   id="name"
                   placeholder="Nome"
                   value={developerUpdate.name}
-                  {...register("name", { onChange: (e) => setDeveloperUpdate(e.target.value), required: true})}
+                  {...register("name", {
+                    onChange: (e) => setDeveloperUpdate(e.target.value),
+                    required: true,
+                  })}
                 />
                 {errors.name && <span>Nome é obrigatório</span>}
               </FormControl>
@@ -103,7 +110,10 @@ export const ModalDeveloperUpdate = ({developer}: ModalDevelopersUpdateProps) =>
                 <Select
                   value={developerUpdate.gender}
                   placeholder="Selecione..."
-                  {...register("gender", { onChange: (e) => setDeveloperUpdate(e.target.value), required: true})}
+                  {...register("gender", {
+                    onChange: (e) => setDeveloperUpdate(e.target.value),
+                    required: true,
+                  })}
                 >
                   <option value="M">Masculino</option>
                   <option value="F">Feminino</option>
@@ -117,7 +127,10 @@ export const ModalDeveloperUpdate = ({developer}: ModalDevelopersUpdateProps) =>
                   id="age"
                   value={developerUpdate.age}
                   placeholder="Idade"
-                  {...register("age", { onChange: (e) => setDeveloperUpdate(e.target.value), required: true})}
+                  {...register("age", {
+                    onChange: (e) => setDeveloperUpdate(e.target.value),
+                    required: true,
+                  })}
                   type="number"
                 />
                 {errors.age && (
@@ -131,7 +144,10 @@ export const ModalDeveloperUpdate = ({developer}: ModalDevelopersUpdateProps) =>
                   id="team"
                   value={developerUpdate.team}
                   placeholder="Equipe"
-                  {...register("team", { onChange: (e) => setDeveloperUpdate(e.target.value), required: true})}
+                  {...register("team", {
+                    onChange: (e) => setDeveloperUpdate(e.target.value),
+                    required: true,
+                  })}
                 />
                 {errors.team && <span>Equipe é obrigatória</span>}
               </FormControl>
@@ -160,7 +176,12 @@ export const ModalDeveloperUpdate = ({developer}: ModalDevelopersUpdateProps) =>
             </form>
           </ModalBody>
           <ModalFooter>
-            <Button type="submit" form="editDeveloper" colorScheme="blue" mr={3}>
+            <Button
+              type="submit"
+              form="editDeveloper"
+              colorScheme="blue"
+              mr={3}
+            >
               Salvar
             </Button>
             <Button onClick={onClose}>Cancelar</Button>

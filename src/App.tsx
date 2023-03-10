@@ -1,4 +1,4 @@
-import { Box, ChakraProvider, CSSReset, Grid, ThemeProvider } from "@chakra-ui/react";
+import { Box, ChakraProvider, CSSReset, Grid } from "@chakra-ui/react";
 import { Main } from "./pages/Main";
 import theme from "./theme";
 

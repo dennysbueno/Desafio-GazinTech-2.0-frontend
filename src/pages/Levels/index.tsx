@@ -11,7 +11,6 @@ import {
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 
-import { Link } from "react-router-dom";
 import { LevelsResponseProps } from "../../interfaces/levels";
 
 import { deleteLevel, findAllLevels } from "../../services/levels";
@@ -38,7 +37,9 @@ export const IndexLevels = () => {
         setLevels(levels.filter((level) => level.id !== id));
       })
       .catch(() => {
-        alert("Não é possível Deletar esse nível, pois há desenvolvedores vinculados.");
+        alert(
+          "Não é possível Deletar esse nível, pois há desenvolvedores vinculados."
+        );
       });
   };
 
@@ -70,7 +71,7 @@ export const IndexLevels = () => {
                 <Td>{level.quantity}</Td>
                 <Td>
                   <Stack spacing={3} direction="row" align="center">
-                    <ModalLevelUpdate level={level}/>
+                    <ModalLevelUpdate level={level} />
                     <Button
                       onClick={() => handleDelete(level.id)}
                       colorScheme="red"

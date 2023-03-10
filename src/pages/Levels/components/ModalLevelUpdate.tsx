@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 import {
   Button,
@@ -23,13 +23,12 @@ import {
   LevelsRequestProps,
   LevelsResponseProps,
 } from "../../../interfaces/levels";
-import { useParams } from "react-router-dom";
 
 type ModalLevelUpdateResponse = {
-  level: LevelsResponseProps
-}
+  level: LevelsResponseProps;
+};
 
-export const ModalLevelUpdate = ({level}: ModalLevelUpdateResponse) => {
+export const ModalLevelUpdate = ({ level }: ModalLevelUpdateResponse) => {
   const toast = useToast();
 
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -81,7 +80,9 @@ export const ModalLevelUpdate = ({level}: ModalLevelUpdateResponse) => {
                   id="name"
                   placeholder="Nível"
                   value={levelUpdate.name}
-                  {...register("name", {onChange: (e) => setLevelUpdate(e.target.value)})}
+                  {...register("name", {
+                    onChange: (e) => setLevelUpdate(e.target.value),
+                  })}
                 />
                 {errors.name && <span>Nível é obrigatório</span>}
               </FormControl>

@@ -5,7 +5,7 @@ export type DevelopersRequestProps = {
   gender: string;
   team: string;
   levelId: number;
-}
+};
 
 export type DevelopersResponseProps = {
   id: number;
@@ -13,6 +13,6 @@ export type DevelopersResponseProps = {
   age: number;
   gender: string;
   team: string;
-  levelId: number
+  levelId: number;
   levelName: string;
-}
+};

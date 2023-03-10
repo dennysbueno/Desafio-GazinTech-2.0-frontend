@@ -17,6 +17,9 @@ export async function showDeveloper(id: number) {
   return api.get(`developer/${id}`);
 }
 
-export async function updateDeveloper(id: number, developer: DevelopersRequestProps) {
+export async function updateDeveloper(
+  id: number,
+  developer: DevelopersRequestProps
+) {
   return api.put(`developer/${id}`, developer);
 }

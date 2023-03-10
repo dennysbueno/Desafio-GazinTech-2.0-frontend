@@ -77,7 +77,7 @@ export const IndexDevelopers = () => {
                         Ver
                       </Button>
                     </Link>
-                    <ModalDeveloperUpdate developer={developer}/>
+                    <ModalDeveloperUpdate developer={developer} />
                     <Button
                       onClick={() => handleDelete(developer.id)}
                       colorScheme="red"

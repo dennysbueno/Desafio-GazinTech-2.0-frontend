@@ -24,7 +24,6 @@ export const SMain = styled.main`
 `;
 
 export const Sidebar = styled.div`
-  /* height: calc(100% - 160px); */
   width: 20%;
   border-right: 1px solid #9a9a9a;
 `;
