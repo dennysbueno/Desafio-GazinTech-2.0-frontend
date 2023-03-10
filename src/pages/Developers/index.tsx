@@ -12,18 +12,18 @@ import {
 import { useEffect, useState } from "react";
 
 import { Link } from "react-router-dom";
-import { DevelopersProps } from "../../interfaces/developers";
+import { DevelopersResponseProps } from "../../interfaces/developers";
 
 import { deleteDeveloper, findAllDevelopers } from "../../services/developers";
 import { ModalDeveloperCreate } from "./components/ModalDeveloperCreate";
-import { ModalDevUpdate } from "./components/ModalDevUpdate";
+import { ModalDeveloperUpdate } from "./components/ModalDeveloperUpdate";
 import { Header, Wrapper } from "./styles";
 
 export const IndexDevelopers = () => {
-  const [developers, setDevelopers] = useState<DevelopersProps[]>([]);
+  const [developers, setDevelopers] = useState<DevelopersResponseProps[]>([]);
   useEffect(() => {
     findAllDevelopers()
-      .then(({ data }: { data: DevelopersProps[] }) => {
+      .then(({ data }: { data: DevelopersResponseProps[] }) => {
         setDevelopers(data);
       })
       .catch((error: any) => {
@@ -69,7 +69,7 @@ export const IndexDevelopers = () => {
               <Tr key={developer.id}>
                 <Td>{developer.name}</Td>
                 <Td>{developer.team}</Td>
-                <Td>{developer.levelId.name}</Td>
+                <Td>{developer.levelName}</Td>
                 <Td>
                   <Stack spacing={3} direction="row" align="center">
                     <Link to={`/viewDeveloper/${developer.id}`}>
@@ -77,7 +77,7 @@ export const IndexDevelopers = () => {
                         Ver
                       </Button>
                     </Link>
-                    <ModalDevUpdate dev={developer} />
+                    <ModalDeveloperUpdate developer={developer}/>
                     <Button
                       onClick={() => handleDelete(developer.id)}
                       colorScheme="red"
