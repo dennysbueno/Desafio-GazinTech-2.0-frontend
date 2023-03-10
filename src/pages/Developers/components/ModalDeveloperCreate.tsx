@@ -13,30 +13,36 @@ import {
   ModalHeader,
   ModalOverlay,
   Select,
-  useDisclosure
+  useDisclosure,
+  useToast,
 } from "@chakra-ui/react";
+
+import { useForm } from "react-hook-form";
 
 import { insertDeveloper } from "../../../services/developers";
 import { findAllLevels } from "../../../services/levels";
-import { LevelsProps } from "../../../interfaces/levels";
-import { DevelopersProps } from "../../../interfaces/developers";
+import { LevelsResponseProps } from "../../../interfaces/levels";
+import {
+  DevelopersRequestProps,
+  DevelopersResponseProps,
+} from "../../../interfaces/developers";
 
 export const ModalDeveloperCreate = () => {
+  const toast = useToast();
+
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const initialRef = React.useRef(null);
   const finalRef = React.useRef(null);
 
+  const [developers, setDevelopers] = useState<DevelopersResponseProps>(
+    {} as DevelopersResponseProps
+  );
 
-  const [name, setName] = useState<string>("");
-  const [gender, setGender] = useState<string>();
-  const [age, setAge] = useState<number>();
-  const [team, setTeam] = useState<string>();
-
-  const [levels, setLevels] = useState<LevelsProps[]>([]);
+  const [levels, setLevels] = useState<LevelsResponseProps[]>([]);
   useEffect(() => {
     findAllLevels()
-      .then(({ data }: { data: LevelsProps[] }) => {
+      .then(({ data }: { data: LevelsResponseProps[] }) => {
         setLevels(data);
       })
       .catch(({ response }) => {
@@ -44,24 +50,22 @@ export const ModalDeveloperCreate = () => {
       });
   }, []);
 
-  async function NewDeveloper(e) {
-    e.preventDefault()
-    const data: DevelopersProps = {
-      name,
-      age,
-      gender,
-      team,
-      levelId: { id: "", name: "" }
-    }
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<DevelopersRequestProps>();
 
+  async function onSubmit(data: DevelopersRequestProps) {
     insertDeveloper(data)
       .then(() => {
         alert(`Cadastrado com sucesso!`);
       })
       .catch(() => {
-        alert("Erro no cadastro, tente novamente.");
-      }).finally(() =>{
-        window.location.reload()
+        alert(`Erro ao cadastrar desenvolvedor, tente novamente!`);
+      })
+      .finally(() => {
+        window.location.reload();
       });
   }
 
@@ -81,58 +85,71 @@ export const ModalDeveloperCreate = () => {
           <ModalHeader>Cadastro de Desenvolvedor</ModalHeader>
           <ModalCloseButton />
           <ModalBody pb={6}>
-            <form id="newDeveloper" onSubmit={NewDeveloper}>
-              <FormControl>
+            <form id="newDeveloper" onSubmit={handleSubmit(onSubmit)}>
+              <FormControl isInvalid={!!errors?.name}>
                 <FormLabel>Nome</FormLabel>
                 <Input
-                  ref={initialRef}
-                  placeholder="name"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  required
+                  id="name"
+                  placeholder="Nome"
+                  value={developers.name}
+                  {...register("name", { required: true })}
                 />
+                {errors.name && <span>Nome é obrigatório</span>}
               </FormControl>
 
-              <FormControl mt={4}>
-                <FormLabel>Genero</FormLabel>
-                <Input
-                  placeholder="gender"
-                  value={gender}
-                  onChange={(e) => setGender(e.target.value)}
-                  required
-                />
+              <FormControl mt={4} isInvalid={!!errors?.gender}>
+                <FormLabel>Gênero</FormLabel>
+                <Select
+                  value={developers.gender}
+                  placeholder="Selecione..."
+                  {...register("gender", { required: true })}
+                >
+                  <option value="M">Masculino</option>
+                  <option value="F">Feminino</option>
+                </Select>
+                {errors.gender && <span>Gênero é obrigatório</span>}
               </FormControl>
 
-              <FormControl mt={4}>
+              <FormControl mt={4} isInvalid={!!errors?.age}>
                 <FormLabel>Idade</FormLabel>
                 <Input
-                  type="number"
+                  id="age"
+                  value={developers.age}
                   placeholder="Idade"
-                  value={age}
-                  onChange={(e) => setAge(e.target.value)}
-                  required
+                  {...register("age", { required: true, min: 0 })}
+                  type="number"
                 />
+                {errors.age && (
+                  <span>Idade é obrigatória e deve ser um número positivo</span>
+                )}
               </FormControl>
 
-              <FormControl mt={4}>
+              <FormControl mt={4} isInvalid={!!errors?.team}>
                 <FormLabel>Equipe</FormLabel>
                 <Input
+                  id="team"
+                  value={developers.team}
                   placeholder="Equipe"
-                  value={team}
-                  onChange={(e) => setTeam(e.target.value)}
-                  required
+                  {...register("team", { required: true })}
                 />
+                {errors.team && <span>Equipe é obrigatória</span>}
               </FormControl>
 
-              <FormControl mt={4}>
+              <FormControl mt={4} isInvalid={!!errors?.levelId}>
                 <FormLabel>Nivel Proficional</FormLabel>
                 <Select
                   placeholder="Selecione..."
-                  value={levels.name}
-                  onChange={(e) => setLevels(e.target.value)}
-                  required
+                  value={developers.levelId}
+                  {...register("levelId", {
+                    onChange: (e) =>
+                      setDevelopers({
+                        ...developers,
+                        levelId: e.target.value,
+                      }),
+                    required: true,
+                  })}
                 >
-                  {levels.map(({ name, id }) => (
+                  {levels.map(({ id, name }) => (
                     <option key={id} value={id}>
                       {name}
                     </option>
