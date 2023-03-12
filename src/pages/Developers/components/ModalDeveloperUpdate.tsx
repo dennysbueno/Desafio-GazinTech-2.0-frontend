@@ -121,19 +121,19 @@ export const ModalDeveloperUpdate = ({
                 {errors.gender && <span>Gênero é obrigatório</span>}
               </FormControl>
 
-              <FormControl mt={4} isInvalid={!!errors?.age}>
-                <FormLabel>Idade</FormLabel>
+              <FormControl mt={4} isInvalid={!!errors?.birthdate}>
+                <FormLabel>Data de Nascimento</FormLabel>
                 <Input
                   id="age"
-                  value={developerUpdate.age}
+                  value={developerUpdate.birthdate}
                   placeholder="Idade"
-                  {...register("age", {
+                  {...register("birthdate", {
                     onChange: (e) => setDeveloperUpdate(e.target.value),
                     required: true,
                   })}
-                  type="number"
+                  type="date"
                 />
-                {errors.age && (
+                {errors.birthdate && (
                   <span>Idade é obrigatória e deve ser um número positivo</span>
                 )}
               </FormControl>

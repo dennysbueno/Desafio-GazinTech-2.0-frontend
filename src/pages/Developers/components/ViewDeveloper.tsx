@@ -35,8 +35,8 @@ export const ViewDeveloper = () => {
           </FormControl>
 
           <FormControl mt={4}>
-            <FormLabel>Idade</FormLabel>
-            <Input value={developer?.age} disabled />
+            <FormLabel>Data de Nascimento</FormLabel>
+            <Input value={developer?.birthdate} disabled />
           </FormControl>
 
           <FormControl mt={4}>

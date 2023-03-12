@@ -110,16 +110,16 @@ export const ModalDeveloperCreate = () => {
                 {errors.gender && <span>Gênero é obrigatório</span>}
               </FormControl>
 
-              <FormControl mt={4} isInvalid={!!errors?.age}>
-                <FormLabel>Idade</FormLabel>
+              <FormControl mt={4} isInvalid={!!errors?.birthdate}>
+                <FormLabel>Data de Nascimento</FormLabel>
                 <Input
                   id="age"
-                  value={developers.age}
-                  placeholder="Idade"
-                  {...register("age", { required: true, min: 0 })}
-                  type="number"
+                  defaultValue={developers.birthdate}
+                  placeholder="Data de Nascimento"
+                  {...register("birthdate", { required: true, min: 0 })}
+                  type="date"
                 />
-                {errors.age && (
+                {errors.birthdate && (
                   <span>Idade é obrigatória e deve ser um número positivo</span>
                 )}
               </FormControl>
