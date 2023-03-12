@@ -1,7 +1,7 @@
 export type DevelopersRequestProps = {
   id: number;
   name: string;
-  age: number;
+  birthdate: string;
   gender: string;
   team: string;
   levelId: number;
@@ -10,7 +10,7 @@ export type DevelopersRequestProps = {
 export type DevelopersResponseProps = {
   id: number;
   name: string;
-  age: number;
+  birthdate: string;
   gender: string;
   team: string;
   levelId: number;
