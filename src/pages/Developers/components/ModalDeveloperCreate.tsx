@@ -149,11 +149,13 @@ export const ModalDeveloperCreate = () => {
                     required: true,
                   })}
                 >
-                  {levels.map(({ id, name }) => (
-                    <option key={id} value={id}>
-                      {name}
-                    </option>
-                  ))}
+                  {levels
+                    .sort((a, b) => a.name.localeCompare(b.name))
+                    .map(({ id, name }) => (
+                      <option key={id} value={id}>
+                        {name}
+                      </option>
+                    ))}
                 </Select>
               </FormControl>
             </form>
