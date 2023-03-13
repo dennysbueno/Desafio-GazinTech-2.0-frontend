@@ -23,6 +23,8 @@ import {
   LevelsRequestProps,
   LevelsResponseProps,
 } from "../../../interfaces/levels";
+import { toastSuccess } from "../../../utils/toast-sucess";
+import { toastError } from "../../../utils/toast-error";
 
 export const ModalLevelCreate = () => {
   const toast = useToast();
@@ -45,10 +47,10 @@ export const ModalLevelCreate = () => {
   async function onSubmit(data: LevelsRequestProps) {
     insertLevel(data)
       .then(() => {
-        alert(`Cadastrado com sucesso!`);
+        toast(toastSuccess(`Cadastrado com sucesso!`));
       })
       .catch(() => {
-        alert(`Erro ao cadastrar um nível, tente novamente!`);
+        toast(toastError(`Erro ao cadastrar um nível, tente novamente!`));
       })
       .finally(() => {
         window.location.reload();

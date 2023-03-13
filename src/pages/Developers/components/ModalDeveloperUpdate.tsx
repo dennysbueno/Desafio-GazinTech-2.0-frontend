@@ -27,6 +27,8 @@ import {
   DevelopersResponseProps,
 } from "../../../interfaces/developers";
 import { useParams } from "react-router-dom";
+import { toastError } from "../../../utils/toast-error";
+import { toastSuccess } from "../../../utils/toast-sucess";
 
 type ModalDevelopersUpdateProps = {
   developer: DevelopersResponseProps;
@@ -51,7 +53,7 @@ export const ModalDeveloperUpdate = ({
         setLevels(data);
       })
       .catch(({ response }) => {
-        alert(response.data.message);
+        toast(toastError(response.data.message));
       });
   }, []);
 
@@ -64,10 +66,10 @@ export const ModalDeveloperUpdate = ({
   async function onSubmit(data: DevelopersRequestProps) {
     updateDeveloper(developer.id, data)
       .then(() => {
-        alert("Editado com Sucesso");
+        toast(toastSuccess("Editado com Sucesso"));
       })
       .catch(() => {
-        alert("Erro ao editar");
+        toast(toastError("Erro ao editar"));
       })
       .finally(() => {
         window.location.reload();

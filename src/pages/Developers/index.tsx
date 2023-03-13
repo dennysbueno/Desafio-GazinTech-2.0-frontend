@@ -8,6 +8,7 @@ import {
   Th,
   Thead,
   Tr,
+  useToast,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 
@@ -15,11 +16,14 @@ import { Link } from "react-router-dom";
 import { DevelopersResponseProps } from "../../interfaces/developers";
 
 import { deleteDeveloper, findAllDevelopers } from "../../services/developers";
+import { toastError } from "../../utils/toast-error";
+import { toastSuccess } from "../../utils/toast-sucess";
 import { ModalDeveloperCreate } from "./components/ModalDeveloperCreate";
 import { ModalDeveloperUpdate } from "./components/ModalDeveloperUpdate";
 import { Header, Wrapper } from "./styles";
 
 export const IndexDevelopers = () => {
+  const toast = useToast();
   const [developers, setDevelopers] = useState<DevelopersResponseProps[]>([]);
   useEffect(() => {
     findAllDevelopers()
@@ -27,18 +31,18 @@ export const IndexDevelopers = () => {
         setDevelopers(data);
       })
       .catch((error: any) => {
-        alert(error.data.message);
+        toast(toastError(error.data.message));
       });
   }, []);
 
   const handleDelete = (id: number) => {
     deleteDeveloper(id)
       .then(() => {
-        alert("Deletado com Sucesso!");
+        toast(toastSuccess("Deletado com Sucesso!"));
         setDevelopers(developers.filter((developer) => developer.id !== id));
       })
       .catch(() => {
-        alert("Erro ao deletar");
+        toast(toastError("Erro ao deletar"));
       });
   };
 

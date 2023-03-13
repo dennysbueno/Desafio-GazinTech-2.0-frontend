@@ -26,6 +26,8 @@ import {
   DevelopersRequestProps,
   DevelopersResponseProps,
 } from "../../../interfaces/developers";
+import { toastError } from "../../../utils/toast-error";
+import { toastSuccess } from "../../../utils/toast-sucess";
 
 export const ModalDeveloperCreate = () => {
   const toast = useToast();
@@ -46,7 +48,7 @@ export const ModalDeveloperCreate = () => {
         setLevels(data);
       })
       .catch(({ response }) => {
-        alert(response.data.message);
+        toast(toastError(response.data.message));
       });
   }, []);
 
@@ -59,10 +61,10 @@ export const ModalDeveloperCreate = () => {
   async function onSubmit(data: DevelopersRequestProps) {
     insertDeveloper(data)
       .then(() => {
-        alert(`Cadastrado com sucesso!`);
+        toast(toastSuccess(`Cadastrado com sucesso!`));
       })
       .catch(() => {
-        alert(`Erro ao cadastrar desenvolvedor, tente novamente!`);
+        toast(toastError(`Erro ao cadastrar desenvolvedor, tente novamente!`));
       })
       .finally(() => {
         window.location.reload();

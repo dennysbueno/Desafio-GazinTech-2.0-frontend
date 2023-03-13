@@ -8,17 +8,21 @@ import {
   Th,
   Thead,
   Tr,
+  useToast,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 
 import { LevelsResponseProps } from "../../interfaces/levels";
 
 import { deleteLevel, findAllLevels } from "../../services/levels";
+import { toastError } from "../../utils/toast-error";
+import { toastSuccess } from "../../utils/toast-sucess";
 import { ModalLevelCreate } from "./components/ModalLevelCreate";
 import { ModalLevelUpdate } from "./components/ModalLevelUpdate";
 import { Header, Wrapper } from "./styles";
 
 export const IndexLevels = () => {
+  const toast = useToast();
   const [levels, setLevels] = useState<LevelsResponseProps[]>([]);
   useEffect(() => {
     findAllLevels()
@@ -26,20 +30,20 @@ export const IndexLevels = () => {
         setLevels(data);
       })
       .catch((error: any) => {
-        alert(error.data.message);
+        toast(toastError(error.data.message));
       });
   }, []);
 
   const handleDelete = (id: number) => {
     deleteLevel(id)
       .then(() => {
-        alert("Deletado com Sucesso!");
+        toast(toastSuccess("Deletado com Sucesso!"));
         setLevels(levels.filter((level) => level.id !== id));
       })
       .catch(() => {
-        alert(
+        toast(toastError(
           "Não é possível Deletar esse nível, pois há desenvolvedores vinculados."
-        );
+        ));
       });
   };
 

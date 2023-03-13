@@ -23,6 +23,8 @@ import {
   LevelsRequestProps,
   LevelsResponseProps,
 } from "../../../interfaces/levels";
+import { toastSuccess } from "../../../utils/toast-sucess";
+import { toastError } from "../../../utils/toast-error";
 
 type ModalLevelUpdateResponse = {
   level: LevelsResponseProps;
@@ -47,10 +49,10 @@ export const ModalLevelUpdate = ({ level }: ModalLevelUpdateResponse) => {
   async function onSubmit(data: LevelsRequestProps) {
     updateLevel(level.id, data)
       .then(() => {
-        alert(`Editado com sucesso!`);
+        toast(toastSuccess(`Editado com sucesso!`));
       })
       .catch(() => {
-        alert(`Erro ao editar esse nível, tente novamente!`);
+        toast(toastError(`Erro ao editar esse nível, tente novamente!`));
       })
       .finally(() => {
         window.location.reload();
